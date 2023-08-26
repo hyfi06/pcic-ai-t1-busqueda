@@ -12,12 +12,15 @@ class PQueue(Generic[T]):
         self.queue_list.append(item)
 
     def pop(self) -> PriorityItem[T]:
-        value = self.queue_list[0]
-        min_priority: int = value[1]
+        pItem = self.queue_list[0]
+        min_priority: int = pItem[1]
         for item in self.queue_list:
             if item[1] < min_priority:
-                value = item
-                min_priority = value[1]
+                pItem = item
+                min_priority = pItem[1]
 
-        self.queue_list.remove(value)
-        return value
+        self.queue_list.remove(pItem)
+        return pItem
+
+    def __len__(self) -> int:
+        return self.queue_list.__len__()
