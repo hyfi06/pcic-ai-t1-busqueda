@@ -1,22 +1,23 @@
-from typing import TypeAlias, Callable, Generic, TypeVar
+from typing import TypeAlias, Generic, TypeVar
 
 T = TypeVar('T')
 
 PriorityItem: TypeAlias = tuple[T, int]
-Strategy: TypeAlias = Callable[[list[PriorityItem]], PriorityItem]
 
 
 class PQueue(Generic[T]):
-    queue_list: list[PriorityItem] = list()
-    strategy: Strategy
+    queue_list: list[PriorityItem[T]] = list()
 
-    def __init__(self, pop_strategy: Strategy) -> None:
-        self.strategy = pop_strategy
-
-    def push(self, item: PriorityItem) -> None:
+    def push(self, item: PriorityItem[T]) -> None:
         self.queue_list.append(item)
 
-    def pop(self) -> PriorityItem:
-        value: PriorityItem = self.strategy(self.queue_list)
+    def pop(self) -> PriorityItem[T]:
+        value = self.queue_list[0]
+        min_priority: int = value[1]
+        for item in self.queue_list:
+            if item[1] < min_priority:
+                value = item
+                min_priority = value[1]
+
         self.queue_list.remove(value)
         return value
