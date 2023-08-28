@@ -7,13 +7,13 @@ Heuristic: TypeAlias = Callable[[str], int]
 
 
 def dfs_strategy(
-    node_priority: int,
+    parent_priority: int,
     border: PQueue[tuple[str, int]],
     new_border: list[tuple[str, int]],
     tree: LabeledGraph,
 ) -> None:
     for item in new_border:
-        border.push((node_priority - 1, item))
+        border.push((parent_priority - 1, item))
 
 
 def bfs_strategy(
@@ -26,7 +26,10 @@ def bfs_strategy(
         border.push((parent_priority + 1, item))
 
 
-def iterative_strategy(initial_node: str) -> Strategy:
+def iterative_strategy(
+    initial_node: str,
+    graph: LabeledGraph
+) -> Strategy:
     depth: int = 0
 
     def strategy(
@@ -40,7 +43,9 @@ def iterative_strategy(initial_node: str) -> Strategy:
         if depth < parent_priority:
             for item in new_border:
                 border.push((parent_priority - 1, item))
-        elif len(border) == 0:
+        if len(border) == 0 and len(
+            graph.get_nodes().difference(tree.get_nodes())
+        ):
             depth -= 1
             border.push((0, (initial_node, 0)))
             tree.clear()
