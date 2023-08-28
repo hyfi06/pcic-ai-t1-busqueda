@@ -1,5 +1,5 @@
 from typing import Callable, TypeAlias
-from search.main import Strategy
+from search.algorithms import Strategy
 from pqueue.models import PQueue
 from graph.models import LabeledGraph
 
@@ -91,7 +91,7 @@ def ucs_strategy(
                 [(node, item[1])]
             )
             border.push((cost, item))
-        elif item[0] in {i[0]for i in border.get_items()}:
+        elif item[0] in {i[0] for i in border.get_items()}:
             idx = 0
             for i in range(len(border.queue_list)):
                 if border.queue_list[i][1][0] == item[0]:
@@ -136,7 +136,7 @@ def a_star_strategy(heuristic: Heuristic) -> Strategy:
         tree: LabeledGraph,
     ) -> None:
         for item in new_border:
-            cost = item[1] + heuristic(item[0])
+            cost = (parent_priority - heuristic(node)) + item[1] + heuristic(item[0])
             if item[0] not in tree.get_nodes():
                 tree.add_node(
                     item[0],

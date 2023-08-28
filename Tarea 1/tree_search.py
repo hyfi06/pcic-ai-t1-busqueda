@@ -1,6 +1,6 @@
 from graph.read import read_labeled_graph
 from search import tree_search, strategies
-from search.main import Strategy
+from search.algorithms import Strategy
 
 
 file_name = "./Rumania.txt"
