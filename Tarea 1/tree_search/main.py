@@ -57,7 +57,7 @@ def main():
         print(result)
         if len(result):
             print(
-                f"Cost {max([i[1] for i in result])}:{'->'.join([i[0] for i in result])}"
+                f"Cost {sum([i[1] for i in result])}:{'->'.join([i[0] for i in result])}"
             )
         else:
             print("Fail")

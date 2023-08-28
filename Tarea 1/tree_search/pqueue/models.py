@@ -23,6 +23,9 @@ class PQueue(Generic[T]):
         self.queue_list.remove(pItem)
         return pItem
 
+    def get_items(self) -> set[T]:
+        return set([i[1] for i in self.queue_list]) if len(self.queue_list) else set()
+
     def __len__(self) -> int:
         return self.queue_list.__len__()
 
