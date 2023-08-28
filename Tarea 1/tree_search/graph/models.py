@@ -16,3 +16,9 @@ class LabeledGraph:
 
     def __str__(self) -> str:
         return self.adjacencies_table.__str__()
+
+    def clear(self) -> None:
+        self.adjacencies_table = dict()
+
+    def get_nodes(self) -> set[str]:
+        return set(self.adjacencies_table.keys())

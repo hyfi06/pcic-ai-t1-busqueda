@@ -1,13 +1,15 @@
-__all__ = ['tree_search']
-
 from typing import Callable, TypeAlias
 from pqueue.models import PQueue
 from graph.models import LabeledGraph
 
 GoalFunction: TypeAlias = Callable[[str], bool]
+NodeLabel: TypeAlias = str
+EdgeWeight: TypeAlias = int
 Strategy: TypeAlias = Callable[[
-    str, int, PQueue[tuple[str, int]],
-    set[str], LabeledGraph
+    int,
+    PQueue[tuple[str, int]],
+    list[tuple[str, int]],
+    LabeledGraph
 ], None]
 
 
@@ -17,33 +19,38 @@ def tree_search(
     initial_node: str,
     goal_test: GoalFunction
 ):
-    border: PQueue[tuple[str, int]] = PQueue()
-    border.push(((initial_node, 0), 0))
+    border: PQueue[tuple[NodeLabel, EdgeWeight]] = PQueue()
+    border.push((0, (initial_node, 0)))
     tree: LabeledGraph = LabeledGraph()
-    visited_nodes: set[str] = set()
-    prev_node: str = ''
+    tree.add_node(initial_node, [])
     while len(border):
-        ((curr_node, weight), priority) = border.pop()
-        tree.add_node(
-            curr_node,
-            [(prev_node, weight)] if prev_node else []
-        )
-        visited_nodes.add(curr_node)
-        if goal_test(curr_node):
-            result: list[tuple[str, int]] = [(curr_node, 0)]
-            iter_node = curr_node
+        (priority, (node, _)) = border.pop()
+        print(f"{node}")
+        if goal_test(node):
+            result: list[tuple[NodeLabel, EdgeWeight]] = [(node, 0)]
+            iter_node = node
             while len(tree.get_border(iter_node)):
                 [(iter_node, iter_weight)] = tree.get_border(iter_node)
                 result.insert(0, (iter_node, iter_weight))
-
+            print(tree)
             return result
         else:
-            prev_node = curr_node
+            expanded_border = [
+                item for item in graph.get_border(node)
+                if item[0] not in tree.get_nodes()
+            ]
+            cost: int = tree.get_border(node)[0][1] if len(
+                tree.get_border(node)) else 0
+
+            for item in expanded_border:
+                tree.add_node(
+                    item[0],
+                    [(node, cost + item[1])]
+                )
             strategy(
-                curr_node,
                 priority,
                 border,
-                visited_nodes,
-                graph,
+                expanded_border,
+                tree
             )
-    return None
+    return []
