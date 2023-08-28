@@ -55,8 +55,6 @@ def main():
     border.push((0, (initial_node, initial_item[1])))
     tree = LabeledGraph()
     tree.add_node(initial_node, [])
-    # max_value = 0
-    # max_leaf = initial_node
     visit_nodes = set()
     while len(border):
         (priority, (node, pack_weight)) = border.pop()
@@ -68,15 +66,6 @@ def main():
         ]
 
         if len(expanded_border) == 0:
-            # result = [(node, data[int(node)][1])]
-            # iter_node = node
-            # while len(tree.get_border(iter_node)):
-            #     [(iter_node, iter_value)] = tree.get_border(iter_node)
-            #     result.insert(0, (iter_node, iter_value))
-            # total_value = sum([data[int(i[0])][1] for i in result])
-            # if (max_value < total_value):
-            #     max_value = total_value
-            #     max_leaf = node
             break
         else:
             for new_node in expanded_border:
@@ -86,8 +75,7 @@ def main():
                     (new_node[0], pack_weight+new_node[1][1])
                 ))
                 tree.add_node(new_node[0], [(node, new_node[1][1])])
-    # print(tree)
-    # result = [(max_leaf, data[int(max_leaf)][1])]
+
     result = [(node, data[int(node)][1])]
     iter_node = node
     while len(tree.get_border(iter_node)):
