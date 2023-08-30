@@ -33,12 +33,18 @@ def tree_search(
             while len(tree.get_border(iter_node)):
                 [(iter_node, iter_weight)] = tree.get_border(iter_node)
                 result.insert(0, (iter_node, iter_weight))
-            print(tree)
             return result
         else:
             expanded_border = [
                 item for item in graph.get_border(node)
+                if item[0] not in tree.get_nodes()
             ]
+            for item in expanded_border:
+                tree.add_node(
+                    item[0],
+                    [(node, item[1])]
+                )
+
             strategy(
                 node,
                 priority,

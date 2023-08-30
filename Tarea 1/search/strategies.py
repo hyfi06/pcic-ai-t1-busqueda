@@ -14,13 +14,7 @@ def dfs_strategy(
     tree: LabeledGraph,
 ) -> None:
     for item in new_border:
-        if item[0] in tree.get_nodes():
-            continue
         border.push((parent_priority - 1, item))
-        tree.add_node(
-            item[0],
-            [(node, item[1])]
-        )
 
 
 def bfs_strategy(
@@ -31,13 +25,7 @@ def bfs_strategy(
     tree: LabeledGraph,
 ) -> None:
     for item in new_border:
-        if item[0] in tree.get_nodes():
-            continue
         border.push((parent_priority + 1, item))
-        tree.add_node(
-            item[0],
-            [(node, item[1])]
-        )
 
 
 def iterative_strategy(
@@ -54,16 +42,11 @@ def iterative_strategy(
         tree: LabeledGraph,
     ) -> None:
         nonlocal depth
+        nonlocal graph
         nonlocal initial_node
 
         if depth < parent_priority:
             for item in new_border:
-                if item[0] in tree.get_nodes():
-                    continue
-                tree.add_node(
-                    item[0],
-                    [(node, item[1])]
-                )
                 border.push((parent_priority - 1, item))
 
         if len(border) == 0 and len(
@@ -85,24 +68,7 @@ def ucs_strategy(
 ) -> None:
     for item in new_border:
         cost = parent_priority + item[1]
-        if item[0] not in tree.get_nodes():
-            tree.add_node(
-                item[0],
-                [(node, item[1])]
-            )
-            border.push((cost, item))
-        elif item[0] in {i[0] for i in border.get_items()}:
-            idx = 0
-            for i in range(len(border.queue_list)):
-                if border.queue_list[i][1][0] == item[0]:
-                    idx = i
-                    break
-            if cost < border.queue_list[idx][0]:
-                border.queue_list[idx] = (cost, item)
-                tree.add_node(
-                    item[0],
-                    [(node, item[1])]
-                )
+        border.push((cost, item))
 
 
 def greedy_strategy(heuristic: Heuristic) -> Strategy:
@@ -114,16 +80,10 @@ def greedy_strategy(heuristic: Heuristic) -> Strategy:
         tree: LabeledGraph,
     ) -> None:
         for item in new_border:
-            if item[0] in tree.get_nodes():
-                continue
             border.push((
                 heuristic(item[0]),
                 item
             ))
-            tree.add_node(
-                item[0],
-                [(node, item[1])]
-            )
     return strategy
 
 
@@ -136,29 +96,11 @@ def a_star_strategy(heuristic: Heuristic) -> Strategy:
         tree: LabeledGraph,
     ) -> None:
         for item in new_border:
-            cost = (parent_priority - heuristic(node)) + item[1] + heuristic(item[0])
-            if item[0] not in tree.get_nodes():
-                tree.add_node(
-                    item[0],
-                    [(node, item[1])]
-                )
-                border.push((
-                    cost,
-                    item
-                ))
-            elif item[0] in {i[0]for i in border.get_items()}:
-                idx = 0
-                for i in range(len(border.queue_list)):
-                    if border.queue_list[i][1][0] == item[0]:
-                        idx = i
-                        break
-                if cost < border.queue_list[idx][0]:
-                    border.queue_list[idx] = (
-                        cost,
-                        item
-                    )
-                    tree.add_node(
-                        item[0],
-                        [(node, item[1])]
-                    )
+            cost = (parent_priority - heuristic(node) if parent_priority else 0) + \
+                item[1] + heuristic(item[0])
+            border.push((
+                cost,
+                item
+            ))
+
     return strategy
