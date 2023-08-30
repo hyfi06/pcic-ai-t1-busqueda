@@ -205,3 +205,6 @@ Bag size: 1000000
 1.125 - 6113:(8, 9)
 TotalWeight: 916108, TotalValue: 999976, Choses: 3003->9999->9998->9997->9996->9995->9994->9993->9952->9770->9722->9710->9287->9117->7662->7498->6113
 ```
+## Repositorio
+
+[https://github.com/hyfi06/pcic-ai241/tree/main/Tarea%201](https://github.com/hyfi06/pcic-ai241/tree/main/Tarea%201)
