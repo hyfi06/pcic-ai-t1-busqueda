@@ -25,7 +25,7 @@ def read_problem(fileName) -> tuple[int, list[tuple[int, int]]]:
     with open(fileName, mode='r') as file:
         data = file.readlines()
     data = [
-        [int(i) for i in row.split(' ')] for row in data
+        tuple([int(i) for i in row.split(' ')])for row in data
         if row
     ]
     [objects_num, size] = data.pop(0)
@@ -34,7 +34,7 @@ def read_problem(fileName) -> tuple[int, list[tuple[int, int]]]:
     return (size, data)
 
 
-def heuristic(node: tuple[int, int]) -> int:
+def heuristic(node: tuple[int, int]) -> float:
     (value, weight) = node
     return float(weight) / value
 
