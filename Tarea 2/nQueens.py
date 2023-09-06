@@ -1,6 +1,7 @@
 import copy
 import sys
 from algorithms.backtracking import State, backtracking
+import time
 
 
 class nQueens(State[int]):
@@ -58,10 +59,16 @@ def main(n: int):
         [0]*n,
         [list(range(1, n+1)) for i in range(n)]
     )
-    solution = backtracking(initial_state, nQueens_next_states, nQueens_goal)
+    solution = backtracking(
+        initial_state,
+        nQueens_next_states,
+        nQueens_goal
+    )
     print(solution)
 
 
 if __name__ == "__main__":
+    print(time.strftime('%c'))
     n: int = int(sys.argv[1])
     main(n)
+    print(time.strftime('%c'))
