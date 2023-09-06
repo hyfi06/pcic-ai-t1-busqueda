@@ -7,18 +7,7 @@ import time
 class nQueens(State[int]):
     @property
     def is_valid(self) -> bool:
-        valid: bool = True
-        for idx, value1 in list(enumerate(self.variables))[:-1]:
-            if value1 == 0:
-                continue
-            for jdx, value2 in list(enumerate(self.variables))[idx+1:]:
-                if value2 == 0:
-                    continue
-                valid = abs(value1 - value2) != abs(idx -
-                                                    jdx) and value1 != value2
-                if not valid:
-                    break
-        return valid
+        return super().is_valid
 
 
 def nQueens_goal(state: nQueens) -> bool:
@@ -33,6 +22,7 @@ def nQueens_next_states(state: nQueens) -> list[nQueens]:
     for idx in list_of_idx:
         new_state = copy.deepcopy(state)
         new_state.variables[idx] = new_state.domain_per_variable[idx].pop(0)
+        # new_state.domain_per_variable[idx] = []
         for i in range(len(state.domain_per_variable)):
             # import pdb; pdb.set_trace()
             try:

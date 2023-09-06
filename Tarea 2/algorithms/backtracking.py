@@ -21,8 +21,16 @@ class State(Generic[T]):
         ]
 
     @abstractproperty
-    def is_valid(self) -> bool:  # type: ignore
-        pass
+    def is_valid(self) -> bool:
+        valid: bool = True
+
+        for idx, value1 in list(enumerate(self.variables))[:-1]:
+            if value1 != 0:
+                continue
+            if len(self.domain_per_variable[idx]) == 0:
+                valid = False
+                break
+        return valid
 
     def __str__(self) -> str:
         return self.variables.__str__()
@@ -44,11 +52,11 @@ def backtracking(
     solutions: set[str] = set()
     while len(edge):
         (priority, state) = edge.pop()
-        # print(f"{priority} - {state}")
+        # print(f"{priority} - {state}: {state.domain_per_variable}")
         visited_states.add(str(state))
         if goal_test(state):
             solutions.add(str(state))
-            break # fist solution
+            break  # fist solution
         else:
             new_states: list[Type[U]] = [
                 new_state for new_state in next_states(state)
