@@ -1,13 +1,13 @@
 import copy
 import sys
-from algorithms.backtracking import State, backtracking
 import time
+
+from typing import Generic, List
+from algorithms.backtracking import State, backtracking, T
 
 
 class nQueens(State[int]):
-    @property
-    def is_valid(self) -> bool:
-        return super().is_valid
+    pass
 
 
 def nQueens_goal(state: nQueens) -> bool:
@@ -16,8 +16,8 @@ def nQueens_goal(state: nQueens) -> bool:
 # import pdb; pdb.set_trace()
 
 
-def nQueens_next_states(state: nQueens) -> list[nQueens]:
-    list_of_idx: list[int] = state.variable_order()
+def nQueens_next_states(state: nQueens) -> List[nQueens]:
+    list_of_idx: List[int] = state.variable_order()
     new_states = list()
     for idx in list_of_idx:
         new_state = copy.deepcopy(state)
