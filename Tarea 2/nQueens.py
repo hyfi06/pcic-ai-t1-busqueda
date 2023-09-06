@@ -22,7 +22,7 @@ def nQueens_next_states(state: nQueens) -> list[nQueens]:
     for idx in list_of_idx:
         new_state = copy.deepcopy(state)
         new_state.variables[idx] = new_state.domain_per_variable[idx].pop(0)
-        # new_state.domain_per_variable[idx] = []
+        new_state.domain_per_variable[idx] = []
         for i in range(len(state.domain_per_variable)):
             # import pdb; pdb.set_trace()
             try:
