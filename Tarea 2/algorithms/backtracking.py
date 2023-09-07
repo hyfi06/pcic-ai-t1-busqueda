@@ -23,7 +23,7 @@ class State(Generic[T]):
     def is_valid(self) -> bool:
         valid: bool = True
 
-        for idx, value1 in list(enumerate(self.variables))[:-1]:
+        for idx, value1 in list(enumerate(self.variables)):
             if value1 != 0:
                 continue
             if len(self.domain_per_variable[idx]) == 0:
