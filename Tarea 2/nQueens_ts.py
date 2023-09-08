@@ -20,11 +20,11 @@ class nQueens(State[int]):
         return conflicts
 
 
-def height_nq(state: nQueens) -> int:
+def nq_height(state: nQueens) -> int:
     return -state.get_num_conflicts()
 
 
-def neighborhood_nq(state: nQueens) -> List[nQueens]:
+def nq_neighborhood(state: nQueens) -> List[nQueens]:
     new_states: List[nQueens] = list()
     for (idx, value) in enumerate(state.variables):
         if value > min(state.domain_per_variable[idx]):
@@ -38,11 +38,11 @@ def neighborhood_nq(state: nQueens) -> List[nQueens]:
     return new_states
 
 
-def goal_nq(state: nQueens) -> bool:
+def nq_goal(state: nQueens) -> bool:
     return state.get_num_conflicts() == 0
 
 
-def time_nq() -> bool:
+def nq_time() -> bool:
     return True
 
 
@@ -55,10 +55,10 @@ def main(n: int):
     )
     solution = taboo_search(
         initial_state,
-        height_nq,
-        neighborhood_nq,
-        goal_nq,
-        time_nq,
+        nq_height,
+        nq_neighborhood,
+        nq_goal,
+        nq_time,
     )
     print(solution)
 
