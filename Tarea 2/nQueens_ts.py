@@ -6,6 +6,7 @@ import random
 from typing import List
 
 from algorithms.taboo_search import taboo_search, State
+from elapsed_time.decorators import execution_time
 
 
 class nQueens(State[int]):
@@ -35,6 +36,14 @@ def nq_neighborhood(state: nQueens) -> List[nQueens]:
             new_state = copy.deepcopy(state)
             new_state.variables[idx] = value + 1
             new_states.append(new_state)
+        if value > min(state.domain_per_variable[idx])+1:
+            new_state = copy.deepcopy(state)
+            new_state.variables[idx] = value - 2
+            new_states.append(new_state)
+        if value < max(state.domain_per_variable[idx])-1:
+            new_state = copy.deepcopy(state)
+            new_state.variables[idx] = value + 2
+            new_states.append(new_state)
     return new_states
 
 
@@ -46,6 +55,7 @@ def nq_time() -> bool:
     return True
 
 
+@execution_time
 def main(n: int):
     random_sol: List[int] = list(range(1, n+1))
     random.shuffle(random_sol)
@@ -64,7 +74,5 @@ def main(n: int):
 
 
 if __name__ == "__main__":
-    print(time.strftime('%c'))
     n: int = int(sys.argv[1])
     main(n)
-    print(time.strftime('%c'))
