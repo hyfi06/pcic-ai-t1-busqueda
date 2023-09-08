@@ -16,7 +16,7 @@ def nQueens_goal(state: nQueens) -> bool:
 
 def nQueens_next_states(state: nQueens) -> List[nQueens]:
     list_of_idx: List[int] = state.variable_order()
-    new_states = list()
+    new_states: List[nQueens] = list()
     for idx in list_of_idx:
         new_state = copy.deepcopy(state)
         new_state.variables[idx] = new_state.domain_per_variable[idx].pop(0)
