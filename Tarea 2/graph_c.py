@@ -35,6 +35,7 @@ def gc_read(fileName) -> Tuple[int, Dict[int, List[int]]]:
 
 class Gc(State[int]):
     edges: Dict[int, List[int]] = dict()
+    min_colors: int = 0
 
     def num_colors(self) -> int:
         return len(set(self.variables).difference({0}))
@@ -46,6 +47,14 @@ class Gc(State[int]):
     @property
     def is_valid(self) -> bool:
         return True
+
+    def get_num_conflicts(self) -> int:
+        conflicts: int = 0
+        for idx, color1 in list(enumerate(self.variables))[:-1]:
+            for jdx in [i for i in Gc.edges[idx] if i > idx]:
+                if color1 == self.variables[jdx]:
+                    conflicts += 1
+        return conflicts
 
 
 def gc_print(state: Gc):

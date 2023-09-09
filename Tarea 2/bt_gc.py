@@ -1,7 +1,7 @@
 import copy
 import sys
 
-from typing import List, Tuple, Dict
+from typing import List
 from elapsed_time.decorators import execution_time
 from algorithms.backtracking import backtracking
 from graph_c import gc_read, Gc, gc_print
@@ -36,7 +36,7 @@ def main(fileName: str) -> None:
     num_vertices, Gc.edges = gc_read(fileName)
     initial_state = Gc(
         [0]*num_vertices,
-        [list(range(1, num_vertices+1)) for i in range(num_vertices)]
+        [list(range(1, num_vertices+1)) for _ in range(num_vertices)]
     )
     solution = backtracking(
         initial_state,

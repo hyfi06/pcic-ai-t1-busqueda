@@ -50,7 +50,7 @@ def ks_neighborhood(state: Ks) -> List[Ks]:
 
 
 @execution_time
-def main(fileName: str, max_time):
+def main(fileName: str, max_time) -> None:
     Ks.capacity, Ks.items = ks_read(fileName)
     num_items = len(Ks.items)
 
@@ -67,6 +67,8 @@ def main(fileName: str, max_time):
         ks_goal,
         timer(max_time),
     )
+
+    print(solution)
 
 
 if __name__ == "__main__":
