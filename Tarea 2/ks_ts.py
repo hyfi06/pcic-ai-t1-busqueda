@@ -1,10 +1,12 @@
 import copy
 import sys
 import time
+import math
 
 from typing import List, Tuple, Callable, Optional
 
 from algorithms.taboo_search import State, taboo_search
+from elapsed_time.decorators import execution_time
 
 
 def read_problem(fileName) -> Tuple[int, List[Tuple[int, int]]]:
@@ -27,38 +29,30 @@ def read_problem(fileName) -> Tuple[int, List[Tuple[int, int]]]:
 class Ks(State[int]):
     capacity: int = 0
     max_value = 0
-
-    def __init__(
-        self,
-        values: List[int],
-        domain_per_variable: List[List[int]],
-        items: List[Tuple[int, int]]
-    ) -> None:
-        super().__init__(values, domain_per_variable)
-        self.items = items
+    items: List[Tuple[int, int]] = list()
 
     def get_value(self) -> int:
         return sum([
-            value for (idx, (value, weight)) in enumerate(self.items)
+            value for (idx, (value, weight)) in enumerate(Ks.items)
             if self.variables[idx]
         ])
 
     def get_weight(self) -> int:
         return sum([
-            weight for (idx, (value, weight)) in enumerate(self.items)
+            weight for (idx, (value, weight)) in enumerate(Ks.items)
             if self.variables[idx] == 1
         ])
 
     @property
     def is_full(self) -> bool:
         return len([
-            item for (idx, item) in enumerate(self.items)
+            item for (idx, item) in enumerate(Ks.items)
             if self.variables[idx] == 0 and self.get_weight() + item[1] < Ks.capacity
         ]) == 0
 
     def get_items(self) -> List[Tuple[int, Tuple[int, int]]]:
         return [
-            (idx, item) for (idx, item) in enumerate(self.items)
+            (idx, item) for (idx, item) in enumerate(Ks.items)
             if self.variables[idx] == 1
         ]
 
@@ -67,28 +61,35 @@ class Ks(State[int]):
         return self.get_weight() <= Ks.capacity
 
 
-def ks_height(state: Ks) -> int:
-    return state.get_value()
+def ks_height(state: Ks) -> float:
+    return (1 if state.is_valid else -1) * state.get_value()
 
 
 def ks_neighborhood(state: Ks) -> List[Ks]:
     new_states: List[Ks] = list()
     idx_items = [(i, item) for i, item in enumerate(state.items)]
     idx_items.sort(key=lambda enum: enum[1][1]/enum[1][0])
+    idx_list_0 = [
+        idx for (idx, item) in idx_items
+        if state.variables[idx] == 0
+    ]
 
-    for i, (idx, (value, weight)) in enumerate(idx_items):
-        s_value = state.variables[idx]
-        s_weight = state.get_weight()
-        if s_value == 0 and weight + s_weight > Ks.capacity:
-            continue
-        if s_value == 0 and i >  len(idx_items) * 0.9:
-            continue
-        if s_value == 1 and i < len(idx_items) * 0.1:
-            continue
-        new_state = copy.deepcopy(state)
-        new_state.variables[idx] = 1 - s_value
-        new_states.append(new_state)
+    idx_list_1 = [
+        idx for (idx, item) in idx_items
+        if state.variables[idx] == 0
+    ]
 
+    if state.get_weight() < Ks.capacity:
+        for idx in idx_list_0[:len(idx_list_0)//2]:
+            new_state = copy.deepcopy(state)
+            new_state.variables[idx] = 1
+            new_states.append(new_state)
+
+    if state.get_weight() > Ks.capacity:
+        for idx in idx_list_1[len(idx_list_0)//2:]:
+            new_state = copy.deepcopy(state)
+            new_state.variables[idx] = 0
+            new_states.append(new_state)
     return new_states
 
 
@@ -117,14 +118,13 @@ def ks_time(minutes: int) -> Callable[[], bool]:
 # import pdb; pdb.set_trace()
 
 
+@execution_time
 def main(fileName: str, max_time):
-    (capacity, items) = read_problem(fileName)
-    Ks.capacity = capacity
-    print(f"W:{capacity}, Items: {len(items)}")
+    (Ks.capacity, Ks.items) = read_problem(fileName)
+    print(f"W:{Ks.capacity}, Items: {len(Ks.items)}")
     initial_state = Ks(
-        [0]*len(items),
-        [[1] for i in range(len(items))],
-        items
+        [0]*len(Ks.items),
+        [[1] for i in range(len(Ks.items))]
     )
 
     solution = taboo_search(
@@ -139,7 +139,6 @@ def main(fileName: str, max_time):
 
 
 if __name__ == "__main__":
-    print(time.strftime('%c'))
     fileName: str = sys.argv[1]
     max_time: int = 60*24
     try:
@@ -147,4 +146,3 @@ if __name__ == "__main__":
     except IndexError:
         pass
     main(fileName, max_time)
-    print(time.strftime('%c'))

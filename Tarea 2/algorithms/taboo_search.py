@@ -31,6 +31,7 @@ def taboo_search(
     while time():
         taboo_list.add(str(state))
         # print(f"{height(state)} - {state}")
+        print(f"{height(state)} - V:{state.get_value()}, W: {state.get_weight()}")
         if goal_test(state) and max_height < height(state):
             max_height = height(state)
             solutions.add(str(state))
@@ -44,6 +45,7 @@ def taboo_search(
             ]
 
             if len(neighborhood_of_state) == 0:
+                print('There are no more neighbors')
                 break
 
             new_state = neighborhood_of_state[0]

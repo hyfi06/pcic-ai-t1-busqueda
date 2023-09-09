@@ -25,18 +25,10 @@ def read_problem(fileName) -> Tuple[int, List[Tuple[int, int]]]:
 class Ks(State[int]):
     capacity: int = 0
     max_value = 0
-
-    def __init__(
-        self,
-        values: List[int],
-        domain_per_variable: List[List[int]],
-        items: List[Tuple[int, int]]
-    ) -> None:
-        super().__init__(values, domain_per_variable)
-        self.items = items
+    items: List[Tuple[int, int]] = list()
 
     def variable_order(self) -> List[int]:
-        idx_items = list(enumerate(self.items))
+        idx_items = list(enumerate(Ks.items))
         idx_items.sort(key=lambda enum: enum[1][1]/enum[1][0])
         return [
             idx for (idx, item) in idx_items
@@ -45,13 +37,13 @@ class Ks(State[int]):
 
     def get_value(self) -> int:
         return sum([
-            value for (idx, (value, weight)) in enumerate(self.items)
+            value for (idx, (value, weight)) in enumerate(Ks.items)
             if self.variables[idx]
         ])
 
     def get_weight(self) -> int:
         return sum([
-            weight for (idx, (value, weight)) in enumerate(self.items)
+            weight for (idx, (value, weight)) in enumerate(Ks.items)
             if self.variables[idx] == 1
         ])
 
@@ -95,13 +87,12 @@ def ks_next_states(state: Ks) -> List[Ks]:
 
 
 def main(fileName: str):
-    (capacity, items) = read_problem(fileName)
-    Ks.capacity = capacity
-    print(f"W:{capacity}, Items: {len(items)}")
+    Ks.capacity, Ks.items = read_problem(fileName)
+
+    print(f"W:{Ks.capacity}, Items: {len(Ks.items)}")
     initial_state = Ks(
-        [0]*len(items),
-        [list(range(1, 2)) for i in range(len(items))],
-        items
+        [0]*len(Ks.items),
+        [list(range(1, 2)) for i in range(len(Ks.items))],
     )
     solution = backtracking(
         initial_state,
