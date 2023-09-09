@@ -1,13 +1,11 @@
 import copy
 import sys
-import time
 
 from typing import List
-from algorithms.backtracking import State, backtracking, T
-
-
-class nQueens(State[int]):
-    pass
+from algorithms.models import State
+from algorithms.backtracking import backtracking
+from elapsed_time.decorators import execution_time
+from queens import nQueens
 
 
 def nQueens_goal(state: nQueens) -> bool:
@@ -22,7 +20,6 @@ def nQueens_next_states(state: nQueens) -> List[nQueens]:
         new_state.variables[idx] = new_state.domain_per_variable[idx].pop(0)
         new_state.domain_per_variable[idx] = []
         for i in range(len(state.domain_per_variable)):
-            # import pdb; pdb.set_trace()
             try:
                 new_state.domain_per_variable[i].remove(
                     new_state.variables[idx])
@@ -42,6 +39,7 @@ def nQueens_next_states(state: nQueens) -> List[nQueens]:
     return new_states
 
 
+@execution_time
 def main(n: int):
     initial_state = nQueens(
         [0]*n,
@@ -56,7 +54,5 @@ def main(n: int):
 
 
 if __name__ == "__main__":
-    print(time.strftime('%c'))
     n: int = int(sys.argv[1])
     main(n)
-    print(time.strftime('%c'))

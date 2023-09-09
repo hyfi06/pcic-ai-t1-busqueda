@@ -1,16 +1,5 @@
 from typing import TypeVar, Callable, Generic, List, Optional, Set
-
-
-T = TypeVar('T')
-
-
-class State(Generic[T]):
-    def __init__(self, values: List[T], domain_per_variable: List[List[T]]) -> None:
-        self.variables: List[T] = values
-        self.domain_per_variable: List[List[T]] = domain_per_variable
-
-    def __str__(self) -> str:
-        return self.variables.__str__()
+from algorithms.models import State
 
 
 U = TypeVar('U', bound=State)
@@ -31,7 +20,6 @@ def taboo_search(
     while time():
         taboo_list.add(str(state))
         # print(f"{height(state)} - {state}")
-        print(f"{height(state)} - V:{state.get_value()}, W: {state.get_weight()}")
         if goal_test(state) and max_height < height(state):
             max_height = height(state)
             solutions.add(str(state))

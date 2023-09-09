@@ -1,6 +1,6 @@
 import datetime
 import time
-from typing import Tuple, TypeAlias, Optional
+from typing import Tuple, TypeAlias, Optional, Callable
 
 
 Days: TypeAlias = int
@@ -19,11 +19,23 @@ def elapsed_time(start: float, end: float) -> Tuple[Days, Hours, Minutes, Second
 
 def print_elapsed_time(start: float, end: float) -> None:
     days, hours, minutes, seconds = elapsed_time(start, end)
-    print(f'Elapsed Time: {days}D{hours}H{minutes}M{seconds}S')
+    print(f'Elapsed Time: {days}D {hours}H {minutes}M {seconds}S')
 
 
 def print_time(time_to_print: Optional[float] = None) -> float:
     if not time_to_print:
         time_to_print = time.time()
-    print(datetime.datetime.fromtimestamp(time_to_print))
+    str_time = datetime.datetime.fromtimestamp(time_to_print)
+    print(f"[{str_time}]")
     return time_to_print
+
+
+def timer(minutes: int) -> Callable[[], bool]:
+    start: float = time.time()
+
+    def still_time() -> bool:
+        current_time: float = time.time()
+        diff_time: float = current_time - start
+        return minutes*60.0 > diff_time
+
+    return still_time
