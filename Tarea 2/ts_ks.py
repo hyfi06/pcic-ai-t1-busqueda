@@ -1,72 +1,63 @@
 import copy
 import sys
+import random
+from typing import List
 
-from typing import List, Tuple, Callable, Optional
-
-from algorithms.taboo_search import State, taboo_search
+from algorithms.taboo_search import taboo_search
 from elapsed_time.decorators import execution_time
 from elapsed_time.tools import timer
-from ks import ks_read, Ks, ks_goal, ks_print
+from ks import ks_read, Ks, ks_goal
 
 
 def ks_height(state: Ks) -> float:
-    ks_print(state)
     return state.get_value() / (Ks.capacity - state.get_weight())
 
 
 def ks_neighborhood(state: Ks) -> List[Ks]:
     new_states: List[Ks] = list()
-    state_weight = state.get_weight()
 
     idx_items = [(i, item) for i, item in enumerate(Ks.items)]
     idx_items.sort(key=lambda enum: enum[1][1]/enum[1][0])
 
     idx_list_0 = [
         idx for (idx, item) in idx_items
-        if state.variables[idx] == 0
+        if state.variables[idx] == 0 and state.get_weight()+item[1] < Ks.capacity
     ]
+
+    while state.get_weight() < Ks.capacity and len(idx_list_0):
+        state.variables[idx_list_0.pop(0)] = 1
+    new_state_0 = copy.deepcopy(state)
+    new_states.append(new_state_0)
 
     idx_list_1 = [
         idx for (idx, item) in idx_items
         if state.variables[idx] == 1
     ]
 
-    if state_weight < Ks.capacity:
-        new_state = copy.deepcopy(state)
-        while (new_state.get_weight() < Ks.capacity):
-            new_state.variables[idx_list_0.pop(0)] = 1
-        new_states.append(new_state)
-    if state_weight > Ks.capacity:
-        new_state = copy.deepcopy(state)
-        while (new_state.get_weight() > Ks.capacity):
-            new_state.variables[idx_list_1.pop()] = 0
-        new_states.append(new_state)
+    while state.get_weight() > Ks.capacity and len(idx_list_1):
+        state.variables[idx_list_1.pop()] = 0
+    new_state_1 = copy.deepcopy(state)
+    new_states.append(new_state_1)
 
-    try:
+    while len(idx_list_0) and len(idx_list_1):
         idx_0 = idx_list_0.pop(0)
         idx_1 = idx_list_1.pop()
         new_state = copy.deepcopy(state)
         new_state.variables[idx_0] = 1
         new_state.variables[idx_1] = 0
         new_states.append(new_state)
-    except:
-        pass
-
-    # if state_weight > Ks.capacity:
-    #     for idx in idx_list_1[len(idx_list_0)//2:]:
-    #         new_state = copy.deepcopy(state)
-    #         new_state.variables[idx] = 0
-    #         new_states.append(new_state)
     return new_states
 
 
 @execution_time
 def main(fileName: str, max_time):
     Ks.capacity, Ks.items = ks_read(fileName)
-    print(f"W:{Ks.capacity}, Items: {len(Ks.items)}")
+    num_items = len(Ks.items)
+
+    print(f"W:{Ks.capacity}, Items: {num_items}")
     initial_state = Ks(
-        [0]*len(Ks.items),
-        [[1] for i in range(len(Ks.items))]
+        [random.randint(0, 1) for _ in range(num_items)],
+        [[1] for _ in range(num_items)]
     )
 
     solution = taboo_search(
@@ -75,9 +66,7 @@ def main(fileName: str, max_time):
         ks_neighborhood,
         ks_goal,
         timer(max_time),
-        False
     )
-    # print(solution)
 
 
 if __name__ == "__main__":
