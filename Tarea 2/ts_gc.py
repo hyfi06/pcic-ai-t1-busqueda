@@ -34,9 +34,9 @@ def gc_neighborhood(state: Gc) -> List[Gc]:
     new_states.append(new_state_half)
 
     for color in range(1, max_color//2):
-        for idx in max_color_idx:
-            state.variables[idx] = color
         new_state_menor = copy.deepcopy(state)
+        for idx in max_color_idx:
+            new_state_menor.variables[idx] = color
         new_states.append(new_state_menor)
     return new_states
 
