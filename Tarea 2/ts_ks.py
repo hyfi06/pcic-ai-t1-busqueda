@@ -6,17 +6,21 @@ from typing import List, Tuple, Callable, Optional
 from algorithms.taboo_search import State, taboo_search
 from elapsed_time.decorators import execution_time
 from elapsed_time.tools import timer
-from ks import ks_read, Ks, ks_print, ks_goal
+from ks import ks_read, Ks, ks_goal, ks_print
 
 
 def ks_height(state: Ks) -> float:
+    ks_print(state)
     return state.get_value() / (Ks.capacity - state.get_weight())
 
 
 def ks_neighborhood(state: Ks) -> List[Ks]:
     new_states: List[Ks] = list()
-    idx_items = [(i, item) for i, item in enumerate(state.items)]
+    state_weight = state.get_weight()
+
+    idx_items = [(i, item) for i, item in enumerate(Ks.items)]
     idx_items.sort(key=lambda enum: enum[1][1]/enum[1][0])
+
     idx_list_0 = [
         idx for (idx, item) in idx_items
         if state.variables[idx] == 0
@@ -24,20 +28,35 @@ def ks_neighborhood(state: Ks) -> List[Ks]:
 
     idx_list_1 = [
         idx for (idx, item) in idx_items
-        if state.variables[idx] == 0
+        if state.variables[idx] == 1
     ]
 
-    if state.get_weight() < Ks.capacity:
-        for idx in idx_list_0[:len(idx_list_0)//2]:
-            new_state = copy.deepcopy(state)
-            new_state.variables[idx] = 1
-            new_states.append(new_state)
+    if state_weight < Ks.capacity:
+        new_state = copy.deepcopy(state)
+        while (new_state.get_weight() < Ks.capacity):
+            new_state.variables[idx_list_0.pop(0)] = 1
+        new_states.append(new_state)
+    if state_weight > Ks.capacity:
+        new_state = copy.deepcopy(state)
+        while (new_state.get_weight() > Ks.capacity):
+            new_state.variables[idx_list_1.pop()] = 0
+        new_states.append(new_state)
 
-    if state.get_weight() > Ks.capacity:
-        for idx in idx_list_1[len(idx_list_0)//2:]:
-            new_state = copy.deepcopy(state)
-            new_state.variables[idx] = 0
-            new_states.append(new_state)
+    try:
+        idx_0 = idx_list_0.pop(0)
+        idx_1 = idx_list_1.pop()
+        new_state = copy.deepcopy(state)
+        new_state.variables[idx_0] = 1
+        new_state.variables[idx_1] = 0
+        new_states.append(new_state)
+    except:
+        pass
+
+    # if state_weight > Ks.capacity:
+    #     for idx in idx_list_1[len(idx_list_0)//2:]:
+    #         new_state = copy.deepcopy(state)
+    #         new_state.variables[idx] = 0
+    #         new_states.append(new_state)
     return new_states
 
 
