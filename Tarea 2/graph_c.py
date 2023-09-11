@@ -1,5 +1,5 @@
 from typing import List, Tuple, Dict
-from algorithms.models import State
+from algorithms.models import State, Individual
 from elapsed_time.tools import print_time
 
 
@@ -51,10 +51,14 @@ class Gc(State[int]):
     def get_num_conflicts(self) -> int:
         conflicts: int = 0
         for idx, color1 in list(enumerate(self.variables))[:-1]:
-            for jdx in [i for i in Gc.edges[idx] if i > idx]:
+            for jdx in [i for i in self.edges[idx] if i > idx]:
                 if color1 == self.variables[jdx]:
                     conflicts += 1
         return conflicts
+
+
+class GenGc(Gc, Individual):
+    pass
 
 
 def gc_print(state: Gc):
@@ -62,3 +66,15 @@ def gc_print(state: Gc):
     print(f"Colors: {state.num_colors()}")
     print(f"Coloration:")
     print(state, end='\n\n')
+
+
+def gc_height(state: Gc) -> int:
+    return - state.get_num_conflicts() - state.num_colors()
+
+
+def gc_goal(state: Gc) -> bool:
+    if state.get_num_conflicts() == 0 and state.num_colors() < state.min_colors:
+        state.__class__.min_colors = state.num_colors()
+        gc_print(state)
+        return True
+    return False

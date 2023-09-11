@@ -26,7 +26,7 @@ def main(fileName: str, max_time) -> None:
 
     initial_population: List[GenKs] = [
         GenKs(values=random.choices([0, 1], k=num_items))
-        for _ in range(num_items*2)
+        for _ in range(500)
     ]
     solution = genetic(
         initial_population,
