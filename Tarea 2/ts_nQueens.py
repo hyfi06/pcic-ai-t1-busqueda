@@ -6,11 +6,7 @@ from typing import List
 
 from algorithms.taboo_search import taboo_search, State
 from elapsed_time.decorators import execution_time
-from queens import nQueens
-
-
-def nq_height(state: nQueens) -> int:
-    return -state.get_num_conflicts()
+from queens import nQueens, nq_goal, nq_height, nq_time
 
 
 def nq_neighborhood(state: nQueens) -> List[nQueens]:
@@ -22,14 +18,6 @@ def nq_neighborhood(state: nQueens) -> List[nQueens]:
                 new_state.variables[idx] = j
                 new_states.append(new_state)
     return new_states
-
-
-def nq_goal(state: nQueens) -> bool:
-    return state.get_num_conflicts() == 0
-
-
-def nq_time() -> bool:
-    return True
 
 
 @execution_time

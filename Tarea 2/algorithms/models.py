@@ -76,11 +76,15 @@ class Individual(State[int]):
         j = 0
         values = []
         while i < len(chromosome):
-            gen = chromosome[i:i+len(cls.domains[j])]
-            value = int(gen, 2) + min(cls.domains[j])
+            max_value = max(cls.domains[j])
+            min_value = min(cls.domains[j])
+            gen_size = len(bin(max_value - min_value)[2:])
+            gen = chromosome[i:i + gen_size]
+            value = min_value + (int(gen, 2) % (max_value-min_value+1))
+
             values.append(value)
             j += 1
-            i += len(cls.domains[j])
+            i += gen_size
         return values
 
     def __mutate__(self) -> None:

@@ -1,4 +1,4 @@
-from algorithms.models import State
+from algorithms.models import State, Individual
 
 
 class nQueens(State[int]):
@@ -10,4 +10,23 @@ class nQueens(State[int]):
                     conflicts += 1
                 if abs(value1 - value2) == abs(idx - jdx):
                     conflicts += 1
+            if value1 > len(self.variables):
+                conflicts += 1
+        if self.variables[-1] > len(self.variables):
+            conflicts += 1
         return conflicts
+
+
+class GenQueens (nQueens, Individual):
+    pass
+
+
+def nq_goal(state: nQueens) -> bool:
+    return state.get_num_conflicts() == 0
+
+
+def nq_time() -> bool:
+    return True
+
+def nq_height(state: nQueens) -> int:
+    return -state.get_num_conflicts()
