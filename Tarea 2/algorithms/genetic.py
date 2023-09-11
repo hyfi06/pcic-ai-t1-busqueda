@@ -27,15 +27,15 @@ def genetic(
     initial_population: List[U],
     fitness: Callable[[U], int | float],
     goal_test: Callable[[U], bool],
-    time: Callable[[], bool],
+    timer: Callable[[], bool],
     fist_solution: Optional[bool] = True
 ) -> Set[str]:
     solutions: Set[str] = set()
     population: List[U] = initial_population
-    population_size = len(initial_population)
+    population_size = len(initial_population) + len(initial_population) % 2
     max_fitness = fitness(population[0])
     generation = 0
-    while time():
+    while timer():
         generation += 1
         parents: List[U] = list()
         while len(parents) < population_size:

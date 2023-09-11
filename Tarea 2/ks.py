@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from algorithms.models import State
+from algorithms.models import State, Individual
 from elapsed_time.tools import print_time
 
 
@@ -24,22 +24,22 @@ class Ks(State[int]):
     items: List[Tuple[int, int]] = list()
 
     def variable_order(self) -> List[int]:
-        idx_items = list(enumerate(Ks.items))
+        idx_items = list(enumerate(self.items))
         idx_items.sort(key=lambda enum: enum[1][1]/enum[1][0])
         return [
             idx for (idx, item) in idx_items
-            if self.variables[idx] == 0 and self.get_weight() + item[1] < Ks.capacity
+            if self.variables[idx] == 0 and self.get_weight() + item[1] < self.capacity
         ]
 
     def get_value(self) -> int:
         return sum([
-            value for (idx, (value, weight)) in enumerate(Ks.items)
+            value for (idx, (value, weight)) in enumerate(self.items)
             if self.variables[idx]
         ])
 
     def get_weight(self) -> int:
         return sum([
-            weight for (idx, (value, weight)) in enumerate(Ks.items)
+            weight for (idx, (value, weight)) in enumerate(self.items)
             if self.variables[idx] == 1
         ])
 
@@ -53,12 +53,16 @@ class Ks(State[int]):
     def is_full(self) -> bool:
         return len([
             item for (idx, item) in enumerate(self.items)
-            if self.variables[idx] == 0 and self.get_weight() + item[1] < Ks.capacity
+            if self.variables[idx] == 0 and self.get_weight() + item[1] < self.capacity
         ]) == 0
 
     @property
     def is_valid(self) -> bool:
-        return self.get_weight() <= Ks.capacity
+        return self.get_weight() <= self.capacity
+
+
+class GenKs(Ks, Individual):
+    pass
 
 
 def ks_print(state: Ks) -> None:
@@ -69,8 +73,8 @@ def ks_print(state: Ks) -> None:
 
 
 def ks_goal(state: Ks) -> bool:
-    if state.is_valid and state.is_full and state.get_value() > Ks.max_value:
-        Ks.max_value = state.get_value()
+    if state.is_valid and state.is_full and state.get_value() > state.max_value:
+        state.__class__.max_value = state.get_value()
         ks_print(state)
         return True
     return False
