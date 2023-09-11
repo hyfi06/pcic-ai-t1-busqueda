@@ -19,7 +19,7 @@ def main(fileName: str, max_time) -> None:
             random.randint(1, GenGc.min_colors + 1)
             for _ in range(GenGc.min_colors)
         ])
-        for _ in range(100)
+        for _ in range(300)
     ]
     solution = genetic(
         initial_population,
