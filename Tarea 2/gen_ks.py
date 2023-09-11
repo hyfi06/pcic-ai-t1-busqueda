@@ -27,7 +27,7 @@ def main(fileName: str, max_time) -> None:
     initial_population: List[GenKs] = random.choices([
         GenKs(values=[1 if j == i else 0 for j in range(0, num_items)])
         for i in range(num_items)
-    ], k=500)
+    ], k=50)
 
     solution = genetic(
         initial_population,

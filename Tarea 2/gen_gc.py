@@ -16,10 +16,10 @@ def main(fileName: str, max_time) -> None:
     ]
     initial_population: list[GenGc] = [
         GenGc(values=[
-            random.randint(1, GenGc.min_colors + 1)
+            random.randint(1, GenGc.min_colors)
             for _ in range(GenGc.min_colors)
         ])
-        for _ in range(300)
+        for _ in range(50)
     ]
     solution = genetic(
         initial_population,
