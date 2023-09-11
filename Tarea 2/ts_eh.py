@@ -10,39 +10,22 @@ from eggholder import EggHolder, eh_height, eh_goal
 
 
 def eh_neighborhood(state: EggHolder) -> List[EggHolder]:
-    depth = 50
-    x0_b = state.variables[0] - min(state.domain_per_variable[0])
-    x0_f = max(state.domain_per_variable[0]) - state.variables[0]
-    x1_b = state.variables[1] - min(state.domain_per_variable[1])
-    x1_f = max(state.domain_per_variable[1]) - state.variables[1]
+    x0_min = state.variables[0] - min(state.domain_per_variable[0])
+    x0_max = max(state.domain_per_variable[0]) - state.variables[0]
+    x1_min = state.variables[1] - min(state.domain_per_variable[1])
+    x1_max = max(state.domain_per_variable[1]) - state.variables[1]
+    steps = 100
     new_states: List[EggHolder] = list()
-
-    for d in range(1, depth+1):
-        new_state_f_s = copy.deepcopy(state)
-        new_state_f_s.variables[0] = state.variables[0] + x0_f/(2*d)
-        new_state_b_s = copy.deepcopy(state)
-        new_state_b_s.variables[0] = state.variables[0] - x0_b/(2*d)
-        new_state_s_f = copy.deepcopy(state)
-        new_state_s_f.variables[1] = state.variables[1] + x1_f/(2*d)
-        new_state_s_b = copy.deepcopy(state)
-        new_state_s_b.variables[1] = state.variables[1] - x1_b/(2*d)
-
-        new_state_f_f = copy.deepcopy(state)
-        new_state_f_f.variables[0] = state.variables[0] + x0_f/(2*d)
-        new_state_f_f.variables[1] = state.variables[1] + x1_f/(2*d)
-        new_state_b_b = copy.deepcopy(state)
-        new_state_b_b.variables[0] = state.variables[0] - x0_b/(2*d)
-        new_state_b_b.variables[1] = state.variables[1] - x1_b/(2*d)
-        new_state_b_f = copy.deepcopy(state)
-        new_state_b_f.variables[0] = state.variables[0] - x0_b/(2*d)
-        new_state_b_f.variables[1] = state.variables[1] + x1_f/(2*d)
-        new_state_f_b = copy.deepcopy(state)
-        new_state_f_b.variables[0] = state.variables[0] + x0_f/(2*d)
-        new_state_f_b.variables[1] = state.variables[1] - x1_b/(2*d)
-        new_states.extend([
-            new_state_f_s, new_state_b_s, new_state_s_f, new_state_s_b,
-            new_state_f_f, new_state_b_b, new_state_b_f, new_state_f_b
-        ])
+    for x_i in range(-steps, steps):
+        for y_i in range(-steps, steps):
+            new_state = copy.deepcopy(state)
+            new_state.variables[0] = new_state.variables[0] + \
+                (x_i - steps) * x0_min / (2*steps) + \
+                (x_i + steps)*x0_max/(2*steps)
+            new_state.variables[1] = new_state.variables[1] + \
+                (y_i - steps) * x1_min / (2*steps) + \
+                (y_i + 100)*x1_max/(2*steps)
+            new_states.append(new_state)
     return new_states
 
 
