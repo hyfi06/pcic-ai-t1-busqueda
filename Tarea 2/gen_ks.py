@@ -24,10 +24,11 @@ def main(fileName: str, max_time) -> None:
 
     print(f"W:{GenKs.capacity}, Items: {num_items}")
 
-    initial_population: List[GenKs] = [
+    initial_population: List[GenKs] = random.choices([
         GenKs(values=[1 if j == i else 0 for j in range(0, num_items)])
-        for i in range(500)
-    ]
+        for i in range(num_items)
+    ], k=500)
+
     solution = genetic(
         initial_population,
         ks_fitness,

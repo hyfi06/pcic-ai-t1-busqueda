@@ -49,6 +49,9 @@ class Ks(State[int]):
             if self.variables[idx] == 1
         ]
 
+    def __str__(self) -> str:
+        return str(self.get_items())
+
     @property
     def is_full(self) -> bool:
         return len([
