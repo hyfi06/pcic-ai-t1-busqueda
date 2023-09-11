@@ -52,8 +52,9 @@ def genetic(
         if fitness(max_individual) > max_fitness:
             max_fitness = fitness(max_individual)
             print_time()
-            print(f"Generation: {generation} Fit: {fitness(max_individual)}")
-            print(f"Best: {max_individual}", end='\n\n')
+            print(f"Generation: {generation} Fit: {fitness(max_individual)}", end='\n\n')
+            # print(f"Generation: {generation} Fit: {fitness(max_individual)}")
+            # print(f"Best: {max_individual}", end='\n\n')
 
         if fitness(max_individual) == max_fitness and goal_test(max_individual):
             solutions.add(str(max_individual))

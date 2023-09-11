@@ -9,7 +9,7 @@ from ks import ks_read, GenKs, ks_goal
 
 
 def ks_fitness(state: GenKs) -> float:
-    return state.get_value() / (GenKs.capacity - state.get_weight())
+    return (-1 if GenKs.capacity < state.get_weight() else 1) * state.get_value()
 
 
 @execution_time
