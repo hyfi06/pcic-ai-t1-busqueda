@@ -52,6 +52,8 @@ Los resultado en la carpeta [Tarea 3/result](https://github.com/hyfi06/pcic-ai24
 Tie
 ```
 
+Resultados: 5 empates
+
 ### minimax vs expectimax
 
 Los resultado en la carpeta [Tarea 3/result](https://github.com/hyfi06/pcic-ai241/tree/tarea-3/Tarea%203/results), los archivos tiene el prefijo m_vs_e
@@ -82,6 +84,8 @@ X: Minimax vs O: Expectimax
 Tie
 ```
 
+Resultados: 5 empates
+
 ### expectimax vs expectimax
 
 Los resultado en la carpeta [Tarea 3/result](https://github.com/hyfi06/pcic-ai241/tree/tarea-3/Tarea%203/results), los archivos tiene el prefijo e_vs_e
@@ -97,6 +101,8 @@ Los resultado en la carpeta [Tarea 3/result](https://github.com/hyfi06/pcic-ai24
 
 Tie
 ```
+
+Resultados: 5 empates
 
 ## Ejercicios de Lógica
 
@@ -166,3 +172,25 @@ Falso. $\{A\lrarr B, \neg (A\vee B)\}$ es satisfactible.
 Sae $w = \{A:F, B:F\}$. Entonces $I(A\lrarr B,w)= 1$ y $I(A\vee B,w)=0$. Por lo tanto, $I(\neg (A\vee B),w)=1$ y el conjunto es satisfactible.
 
 #### e) $A\lrarr B \models \neg A \vee B$
+
+Verdadero.
+
+Veamos que $\{A\lrarr B, \neg (\neg A \vee B)\}$ no es satisfactible.
+
+Si $I(\neg (\neg A \vee B),w) =1$, entonces $I(A\wedge \neg B,w) =1$. Por lo que, $I(A,w) =1$ y $I(B,w)=0$. Entonces $I(A\lrarr B,w)=0$.
+
+Por lo que, el conjunto no es satisfactible.
+
+#### f) $(A \wedge B) \rarr C \models (A \rarr C) \vee (B \rarr C)$
+
+Verdadero.
+
+Veamos que $\{(A \wedge B) \rarr C, \neg ((A \rarr C) \vee (B \rarr C))\}$ no es satisfactible.
+
+Saea $w$ un modelo. Si $I(\neg ((A \rarr C) \vee (B \rarr C)),w) = 1$, entonces $I(\neg( A \rarr C),w) =1$ y $I(\neg (B \rarr C),w)=1$.
+
+Entonces, $I(A\wedge \neg C,w) = 1$ y $I(B\wedge \neg C,w)=1$. Por lo tanto, $I(A,w)=1$, $I(B,w)=1$ y $I(C,w)=0$.
+
+Entonces $I((A\wedge B)\rarr C)=0$. Por lo tanto el conjunto no es satisfactible.
+
+
