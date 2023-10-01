@@ -2,7 +2,7 @@ from elapsed_time.tools import print_time
 from tic_tac_toe.models import Board
 
 
-def print_board(board: Board):
+def print_board(board: Board) -> None:
     n = len(board.variables)
     print_time()
     print("-" * (n * 4 + 1))
@@ -14,7 +14,7 @@ def print_board(board: Board):
     print()
 
 
-def heuristic(player: str, board: Board):
+def heuristic(player: str, board: Board) -> float:
     columns = [
         [board.variables[i][j] for i in range(3)]
         for j in range(3)
@@ -36,10 +36,10 @@ def heuristic(player: str, board: Board):
     opponent_1 = x_o_count('O'if player == 'X' else 'X', 1)
     opponent_2 = x_o_count('O'if player == 'X' else 'X', 2)
 
-    return 3 * player_2 + player_1 - 3*opponent_2 - opponent_1
+    return (3 * player_2 + player_1 - 3*opponent_2 - opponent_1)/6
 
 
-def probability(player: str, board: Board):
+def probability(player: str, board: Board) -> float:
     num = sum([
         len([cell for cell in row if cell == ''])
         for row in board.variables

@@ -3,7 +3,7 @@ from tic_tac_toe.models import Board
 
 
 def agent(
-    depth,
+    depth: int,
     heuristic: Callable[[str, Board], float],
     probability: Callable[[str, Board], float]
 ) -> Callable[[str, Board], Board]:

@@ -3,7 +3,7 @@ from tic_tac_toe.tools import print_board
 from algorithms import minimax
 
 
-def main():
+def main() -> None:
     game = Game(minimax.agent, minimax.agent)
     print_board(game.board)
 

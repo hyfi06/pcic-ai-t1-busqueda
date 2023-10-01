@@ -4,7 +4,7 @@ from algorithms import expectimax, minimax
 from random import random
 
 
-def main():
+def main() -> None:
     agent_m = minimax.agent
     agent_e = expectimax.agent(
         3, heuristic, probability

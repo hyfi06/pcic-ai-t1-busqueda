@@ -32,7 +32,7 @@ def value(player: str, state: Board, is_max: bool, alpha: float, beta: float) ->
     return v
 
 
-def max_value(player, state: Board, alpha: float, beta: float) -> Tuple[float, float, float]:
+def max_value(player: str, state: Board, alpha: float, beta: float) -> Tuple[float, float, float]:
     v = float('-inf')
     for successor in state.successors(player):
         v = max(v, value(
@@ -48,7 +48,7 @@ def max_value(player, state: Board, alpha: float, beta: float) -> Tuple[float, f
     return (v, alpha, beta)
 
 
-def min_value(player, state: Board, alpha: float, beta: float) -> Tuple[float, float, float]:
+def min_value(player: str, state: Board, alpha: float, beta: float) -> Tuple[float, float, float]:
     v = float('+inf')
     for successor in state.successors('O' if player == 'X' else 'X'):
         v = min(v, value(

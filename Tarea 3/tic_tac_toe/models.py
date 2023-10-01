@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Callable
 from algorithms.models import State
 import copy
 
@@ -49,7 +49,11 @@ class Board(State[List[str]]):
 
 
 class Game():
-    def __init__(self, agent_x, agent_o) -> None:
+    def __init__(
+        self,
+        agent_x: Callable[[str, Board], Board],
+        agent_o: Callable[[str, Board], Board]
+    ) -> None:
         self.agent_x = agent_x
         self.agent_o = agent_o
         self.board = Board()
