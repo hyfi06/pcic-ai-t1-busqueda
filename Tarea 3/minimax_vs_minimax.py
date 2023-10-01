@@ -1,4 +1,4 @@
-from tic_tac_toe.models import Game, Board, winner, is_terminal
+from tic_tac_toe.models import Game
 from tic_tac_toe.tools import print_board
 from algorithms import minimax
 

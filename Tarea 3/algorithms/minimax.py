@@ -1,6 +1,5 @@
 from typing import Tuple
 from tic_tac_toe.models import Board
-from tic_tac_toe.tools import print_board
 
 
 def agent(player: str, state: Board) -> Board:
@@ -10,11 +9,11 @@ def agent(player: str, state: Board) -> Board:
     beta = float("+inf")
     for successor in state.successors(player):
         successor_value = value(
-            player,
-            successor,
-            False,
-            alpha,
-            beta
+            player=player,
+            state=successor,
+            is_max=False,
+            alpha=alpha,
+            beta=beta
         )
         if max_value < successor_value:
             max_value = successor_value

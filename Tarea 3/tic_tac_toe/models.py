@@ -30,12 +30,11 @@ class Board(State[List[str]]):
     def successors(self, player: str) -> List['Board']:
         if not self._successors:
             self._successors = []
-            for i in range(3):
-                for j in range(3):
-                    if len(self.domain_per_variable[i][j]) != 0:
-                        new_values = copy.deepcopy(self.variables)
-                        new_values[i][j] = player
-                        self._successors.append(self.__class__(new_values))
+            for i, j in [(1, 1), (0, 0), (0, 2), (2, 0), (2, 2), (0, 1), (1, 0), (1, 2), (2, 1)]:
+                if len(self.domain_per_variable[i][j]) != 0:
+                    new_values = copy.deepcopy(self.variables)
+                    new_values[i][j] = player
+                    self._successors.append(self.__class__(new_values))
 
         return self._successors
 
@@ -47,9 +46,6 @@ class Board(State[List[str]]):
             return 1
         else:
             return -1
-
-    # def __lt__(self, other: 'Board'):
-    #     return str(self) > str(other)
 
 
 class Game():
