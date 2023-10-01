@@ -9,15 +9,6 @@ class State(Generic[T]):
         self.variables: List[T] = values
         self.domain_per_variable: List[List[T]] = domain_per_variable
 
-    def variable_order(self) -> List[int]:
-        idx_domains: List[tuple[int, List[T]]] = list(
-            enumerate(self.domain_per_variable))
-        idx_domains.sort(key=lambda enum: len(enum[1]))
-        return [
-            idx for (idx, domain) in idx_domains
-            if len(domain)
-        ]
-
     @abstractproperty
     def is_valid(self) -> bool:
         valid: bool = True
@@ -29,6 +20,10 @@ class State(Generic[T]):
                 valid = False
                 break
         return valid
+
+    @abstractproperty
+    def is_terminal(self) -> bool:  # type: ignore
+        pass
 
     def __str__(self) -> str:
         return self.variables.__str__()
