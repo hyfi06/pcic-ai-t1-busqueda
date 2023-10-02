@@ -1,5 +1,13 @@
 # PCIC Inteligencia Artifical Semestre 2024-1
 
+
+## Tarea 1
+[Tag Tarea.1, carpeta Tarea 1](https://github.com/hyfi06/pcic-ai241/tree/Tarea.1/Tarea%201)
+
+## Tarea 2
+[Rama tarea-2, carpeta Tarea 2](https://github.com/hyfi06/pcic-ai241/tree/tarea-2/Tarea%202)
+
+
 ## Copyright
 
 Copyright (c) 2023 Héctor Olvera Vital
