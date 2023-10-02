@@ -119,7 +119,7 @@ Como $A$, $B$, $C$, $D$ son los únicos proposiciones, existen $2^4$ modelos.
 | F   | V   | V          |
 | F   | F   | F          |
 
-Hay 3 modelos que satisface la fórmula. Como $A$ y $D$ ocurren libres, entonces en total hay $3*2^2=12$ modelos en total.
+Hay 3 modelos que satisface la fórmula. Como $A$ y $D$ no aparecen en la formula, entonces en total hay $3*2^2=12$ modelos en total.
 
 #### b) $\neg A \vee \neg B \vee \neg C \vee \neg D$
 
@@ -193,4 +193,152 @@ Entonces, $I(A\wedge \neg C,w) = 1$ y $I(B\wedge \neg C,w)=1$. Por lo tanto, $I(
 
 Entonces $I((A\wedge B)\rarr C)=0$. Por lo tanto el conjunto no es satisfactible.
 
+#### g) $C \vee (\neg A \wedge \neg B) \equiv A \rarr C\wedge B\rarr C$
 
+Sae $w$ tal que $I(C \vee (\neg A \wedge \neg B),w)=1$. Entonces, $I(C,w)=1$ o $I(\neg A \wedge \neg B,w)=1$
+
+Si $I(C,w) = 1$, $I(A\rarr C,w) = 1$ y $I(B\rarr C,w)=1$. Por lo que, $I(A \rarr C\wedge B\rarr C, w)=1$.
+
+Si $I(\neg A \wedge \neg B, w)=1$, entonces $I(A)=0$ y $I(B)=0$. Por lo que, $I(A\rarr C,w) =1 $ y $I(B\rarr C,w)=1$. Así, $I(A \rarr C\wedge B\rarr C, w)=1$.
+
+En ambos casos, $I(A \rarr C\wedge B\rarr C, w)=1$.
+
+Por lo que, $C \vee (\neg A \wedge \neg B) \models A \rarr C\wedge B\rarr C$
+
+Sea $w$ tal que $I(A \rarr C\wedge B\rarr C, w)=1$. Entonces $I(A\rarr C,w) = 1$ y $I(B\rarr C,w)=1$. Por lo que, $I(\neg A\vee C,w) = 1$ y $I(\neg B\vee C,w)=1$.
+
+Si $I(C,w)=1$, entonces $I(C \vee (\neg A \wedge \neg B),w)=1$.
+
+Si $I(C,w)=0$, entonces $I(\neg A,w)=1$ y $I(\neg B,w)=1$. Por lo que, $I(C \vee (\neg A \wedge \neg B),w)=1$.
+
+En ambos casos $I(C \vee (\neg A \wedge \neg B),w)=1$
+
+Entonces, $A \rarr C\wedge B\rarr C\models C \vee (\neg A \wedge \neg B)$
+
+Por lo tanto, $C \vee (\neg A \wedge \neg B) \equiv A \rarr C\wedge B\rarr C$
+
+#### h) $(A\vee B)\wedge (\neg C \vee \neg D \vee E)\models A \vee B$
+
+Verdadero.
+
+Veamos que $\{(A\vee B)\wedge (\neg C \vee \neg D \vee E),\neg(A \vee B)\}$ no es satisfactible.
+
+Sea $w$ un modelo. Si $I((A\vee B)\wedge (\neg C \vee \neg D \vee E),w)=1$, $I(A\vee B,w)=1$. Por lo que, $I(\neg(A\vee B),w)=0$.
+
+Entonces el conjunto no es satisfactible.
+
+#### i) $(A\vee B)\wedge (\neg C \vee \neg D \vee E)\models (A \vee B)\wedge (\neg D \vee E)$
+
+Falso.
+
+Sae $w=\{A:V,B:V,C:F,D:V,E:F\}$.
+
+| $(A$ | $\vee$ | $B)$ | $\wedge$ | $(\neg$ | $C$ | $\vee$ | $\neg$ | $D$ | $\vee$ | $E)$ |
+| ---- | ------ | ---- | -------- | ------- | --- | ------ | ------ | --- | ------ | ---- |
+| V    | V      | V    | **V**    | V       | F   | V      | F      | V   | F      | F    |
+
+| $(A$ | $\vee$ | $B)$ | $\wedge$ | $(\neg$ | $D$ | $\vee$ | $E)$ |
+| ---- | ------ | ---- | -------- | ------- | --- | ------ | ---- |
+| V    | V      | V    | **F**    | F       | V   | F      | F    |
+
+#### j) $(A\vee B) \wedge \neg (A\rarr B)$
+
+Verdadero.
+
+Sae $w=\{A:V,B:F\}$.
+
+| $(A$ | $\vee$ | $B)$ | $\wedge$ | $\neg$ | $(A$ | $\rarr$ | $B)$ |
+| ---- | ------ | ---- | -------- | ------ | ---- | ------- | ---- |
+| V    | V      | F    | **V**    | V      | V    | F       | F    |
+
+#### k) $(A\lrarr B )\wedge (\neg A\vee B)$
+
+| $(A$ | $\lrarr$ | $B)$ | $\wedge$ | $(\neg$ | $A$ | $\vee$ | $B)$ |
+| ---- | -------- | ---- | -------- | ------- | --- | ------ | ---- |
+| V    | V        | V    | **V**    | F       | V   | V      | V    |
+
+### l)
+
+Verdadero.
+
+Por inducción sobre el número de símbolos proposicionales adicionales a $A$, $B$, $C$.
+
+Paso base $n=0$
+
+| $A$ | $B$ | $C$ | $(A\lrarr B)$ | $(A\lrarr B)\lrarr C$ |
+| --- | --- | --- | ------------- | --------------------- |
+| V   | V   | V   | V             | V                     |
+| V   | V   | F   | V             | F                     |
+| V   | F   | V   | F             | F                     |
+| V   | F   | F   | F             | V                     |
+| F   | V   | V   | F             | F                     |
+| F   | V   | F   | F             | V                     |
+| F   | F   | V   | V             | V                     |
+| F   | F   | F   | V             | F                     |
+
+Existen 4 modelos que satisface $(A\lrarr B)$ y 4 modelos que satisface $(A\lrarr B)\lrarr C$.
+
+H.I.: Supongamos para $n=k$ que tiene la misma cantidad de modelos.
+
+Sean $A_1$, $A_2$,..., $A_k$, $A_{k+1}$, los símbolos proposicionales adicionales a $A$, $B$, $C$.
+Por hipótesis de inducción, existen la misma cantidad de modelos para $(A\lrarr B)$ y $(A\lrarr B)\lrarr C$ con $A$, $B$, $C$, $A_1$, $A_2$,..., $A_k$.
+Al agregar $A_{k+1}$, se multiplica por 2 la cantidad de modelos posibles. Ya que como $A_{k+1}$ no aparece en $(A\lrarr B)$ ni $(A\lrarr B)\lrarr C$, si w es un modelo que satisface alguna de las dos fórmulas, $w\cup\{A_{k+1}:True\}$ y $w\cup\{A_{k+1}:Falso\}$ son también modelos.
+
+Entonces, existen la misma cantidad de model para $(A\lrarr B)$ y $(A\lrarr B)\lrarr C$ con $A$, $B$, $C$, $A_1$, $A_2$,..., $A_k$, $A_{k+1}$.
+
+Por el principio de inducción, el se cumple para toda $n$.
+
+### 7.18
+
+$[(Food \rarr Party)\vee(Drinks\rarr Party)] \rarr [(Food \wedge Drinks)\rarr Party]$
+
+#### a)
+
+| $[(Food$ | $\rarr$ | $Party)$ | $\vee$ | $(Drinks$ | $\rarr$ | $Party)]$ | $\rarr$ | $[(Food$ | $\wedge$ | $Drinks)$ | $\rarr$ | $Party]$ |
+| -------- | ------- | -------- | ------ | --------- | ------- | --------- | ------- | -------- | -------- | --------- | ------- | -------- |
+| V        | V       | V        | V      | V         | V       |           | V       |          | V        |           | V       |
+| V        | V       | V        | V      | F         | V       |           | V       |          | F        |           | V       |
+| V        | F       | F        | F      | V         | F       |           | V       |          | V        |           | F       |
+| V        | F       | F        | V      | F         | V       |           | V       |          | F        |           | V       |
+| F        | V       | V        | V      | V         | V       |           | V       |          | F        |           | V       |
+| F        | V       | V        | V      | F         | V       |           | V       |          | F        |           | V       |
+| F        | V       | F        | V      | V         | F       |           | V       |          | F        |           | V       |
+| F        | V       | F        | V      | F         | V       |           | V       |          | F        |           | V       |
+
+Es válida.
+
+#### b)
+
+$[(Food \rarr Party)\vee(Drinks\rarr Party)] \rarr [(Food \wedge Drinks)\rarr Party]$
+
+$[(\neg Food \vee Party)\vee(\neg Drinks\vee Party)] \rarr [\neg (Food \wedge Drinks)\vee Party]$
+
+$(\neg Food \vee Party\vee\neg Drinks\vee Party) \rarr (\neg Food \vee \neg Drinks \vee Party)$
+
+Se confirma la a) ya que el consecuente de la implicación es el antecedente quitando la redundancia de Party.
+
+#### c)
+
+$\vdash (\neg Food \vee Party\vee\neg Drinks\vee Party) \rarr (\neg Food \vee \neg Drinks \vee Party)$
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party\} \vdash \neg Food \vee \neg Drinks \vee Party$
+
+Apliquemos resolución
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party, \neg(\neg Food \vee \neg Drinks \vee Party)\}$
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party,  Food \wedge  Drinks \wedge \neg Party\}$
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party,  Food,  Drinks, \neg Party\}$
+
+$Food$, $\neg Food \vee Party\vee\neg Drinks\vee Party$ -> $Party\vee\neg Drinks\vee Party$
+
+$\neg Party$, $Party\vee\neg Drinks\vee Party$ -> $\neg Drinks\vee Party$
+
+Drinks, $\neg Drinks\vee Party$ -> $Party$
+
+$Party$, $\neg Party$ -> False
+
+Por lo tanto, no es satisfactible.
+
+Entonces $\{\neg Food \vee Party\vee\neg Drinks\vee Party\} \vdash \neg Food \vee \neg Drinks \vee Party$
