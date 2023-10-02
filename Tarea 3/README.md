@@ -359,3 +359,14 @@ e) $\exists x (Parent(Joan,x) \wedge Parent(Kevin,x))\wedge$ $\forall x (Parent(
 
 a. $Occupation(Emily,Surgeon) \vee Occupation(Emily, Lawyer)$
 
+b. $Occupation(Joe,Actor)\wedge \exists x (\neg x = Actor \wedge Occupation(Joe,x)$
+
+c. $\forall x (Occupation(x,Surgeon) \rarr Occupation(x,Doctor))$
+
+d. $\forall x (Occupation(x,Lawyer) \rarr \neg Customer(Joe,x))$
+
+e. $\exists x (Boss(x,Emily) \wedge Occupation(x,Lawyer))$
+
+f. $\exist x (Occupation(x,Lawyer)\wedge \forall y (Customer(y,x)\rarr Occupation(y,Doctor))$
+
+g. 
