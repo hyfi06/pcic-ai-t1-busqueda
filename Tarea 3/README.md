@@ -103,3 +103,7 @@ Tie
 ```
 
 Resultados: 5 empates
+
+## Ejercicios de lógica 
+
+Ver [Tarea3.pdf](https://github.com/hyfi06/pcic-ai241/blob/tarea-3/Tarea%203/Tarea3.pdf)
