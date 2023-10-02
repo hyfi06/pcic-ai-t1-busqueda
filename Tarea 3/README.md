@@ -342,3 +342,20 @@ $Party$, $\neg Party$ -> False
 Por lo tanto, no es satisfactible.
 
 Entonces $\{\neg Food \vee Party\vee\neg Drinks\vee Party\} \vdash \neg Food \vee \neg Drinks \vee Party$
+
+### 7.4
+
+a) $\exists x (Parent(Joan,x)\wedge Female(x))$
+
+b) $\exists^1 x (Parent(Joan,x)\wedge Female(x))$
+
+c) $\exists^1 x Parent(Joan,x) \wedge \forall x (Parent(Joan,x) \rarr Female(x))$
+
+d) $\exists^1 x (Parent(Joan,x) \wedge Parent(Kevin,x))$
+
+e) $\exists x (Parent(Joan,x) \wedge Parent(Kevin,x))\wedge$ $\forall x (Parent(Joan,x) \rarr Parent(Kevin,x))$
+
+### 8.10
+
+a. $Occupation(Emily,Surgeon) \vee Occupation(Emily, Lawyer)$
+
