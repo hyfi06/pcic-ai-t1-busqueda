@@ -1,0 +1,311 @@
+\documentclass[spanish]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tilden,es-lcroman]{babel}
+\usepackage[letterpaper,top=3.5cm,bottom=3.5cm,marginpar=3cm,left=3.5cm,right=3.5cm]{geometry}
+\usepackage{amsmath,amssymb,units,amsfonts}
+\usepackage{wasysym}
+\title{Ejercicios de Lógica}
+\author{Héctor Olvera Vital}
+\begin{document}
+
+\maketitle
+
+
+\section*{7.7}
+Como $A$, $B$, $C$, $D$ son los únicos proposiciones, existen $2^4$ modelos.
+
+\subsection*{a) $B \vee C$}
+
+\begin{tabular}{c|c|c}
+  B & C & $B \vee C$ \\\hline
+  V & V & V          \\
+  V & F & V          \\
+  F & V & V          \\
+  F & F & F
+\end{tabular}
+
+Hay 3 modelos que satisface la fórmula. Como $A$ y $D$ no aparecen en la formula, entonces en total hay $3*2^2=12$ modelos en total.
+
+\subsection*{ b) $\neg A \vee \neg B \vee \neg C \vee \neg D$}
+
+La fórmula es equivalente a $\neg (A \wedge B \wedge C \wedge D)$.
+
+Si un modelo no satisface la fórmula, entonces satisface $A\wedge B\wedge C\wedge D$, entonces el modelo es $s(A)=T$, $s(B)=T$, $s(C)=T$ y $s(D)=T$
+
+Por lo que, todos los demás modelos satisfacen la fórmula. En total $2^4 -1 = 15$
+
+\subsection*{ c) $(A \rightarrow B)\wedge A \wedge \neg B \wedge C \wedge D$}
+
+Supongamos que $s$ una asignación de verdad que satisface la fórmula.
+
+Entonces,
+
+\begin{align*}
+  s(A \rightarrow B) = T \\
+  s(A) = T               \\
+  s(\neg B) = T          \\
+  s(C) = T               \\
+  s(D) = D
+\end{align*}
+
+Pero $s(A) = T$ y $s(\neg B) = T$, por lo que $s(A\rightarrow B) = F$. Lo cual es una contradicción.
+
+Por lo tanto no existe la asignación.
+
+Entonces existen 0 modelos para la fórmula.
+
+\section*{7.4}
+
+\subsection*{ a) $False \models True$}
+
+Verdadero.
+
+$\{False, \neg True\}$ no es satisfactible.
+
+\subsection*{ b) $True \models False$}
+
+Falso. $\{ True, \neg False\}$ es satisfactible. Sea $w=\{\}$, $I(True\wedge \neg False, w)=1$
+
+\subsection*{c) $A\wedge B \models A \leftrightarrow B$}
+
+Verdadero.
+
+Sea w un modelo. Si $I(A\wedge B,w)=1$, entonces $I(A,w) = 1$ y $I(B,w)=1$. Por lo tanto, $I(A\leftrightarrow B,w) = 1$.
+
+\subsection*{ d) $A\leftrightarrow B \models A \vee B$}
+
+Falso. $\{A\leftrightarrow B, \neg (A\vee B)\}$ es satisfactible.
+
+Sae $w = \{A:F, B:F\}$. Entonces $I(A\leftrightarrow B,w)= 1$ y $I(A\vee B,w)=0$. Por lo tanto, $I(\neg (A\vee B),w)=1$ y el conjunto es satisfactible.
+
+\subsection*{ e) $A\leftrightarrow B \models \neg A \vee B$}
+
+Verdadero.
+
+Veamos que $\{A\leftrightarrow B, \neg (\neg A \vee B)\}$ no es satisfactible.
+
+Si $I(\neg (\neg A \vee B),w) =1$, entonces $I(A\wedge \neg B,w) =1$. Por lo que, $I(A,w) =1$ y $I(B,w)=0$. Entonces $I(A\leftrightarrow B,w)=0$.
+
+Por lo que, el conjunto no es satisfactible.
+
+\subsection*{ f) $(A \wedge B) \rightarrow C \models (A \rightarrow C) \vee (B \rightarrow C)$ }
+
+Verdadero.
+
+Veamos que $\{(A \wedge B) \rightarrow C, \neg ((A \rightarrow C) \vee (B \rightarrow C))\}$ no es satisfactible.
+
+Sea $w$ un modelo. Si $I(\neg ((A \rightarrow C) \vee (B \rightarrow C)),w) = 1$, entonces $I(\neg( A \rightarrow C),w) =1$ y $I(\neg (B \rightarrow C),w)=1$.
+
+Entonces, $I(A\wedge \neg C,w) = 1$ y $I(B\wedge \neg C,w)=1$. Por lo tanto, $I(A,w)=1$, $I(B,w)=1$ y $I(C,w)=0$.
+
+Entonces $I((A\wedge B)\rightarrow C)=0$. Por lo tanto el conjunto no es satisfactible.
+
+\subsection*{ g) $C \vee (\neg A \wedge \neg B) \equiv A \rightarrow C\wedge B\rightarrow C$}
+
+Sae $w$ tal que $I(C \vee (\neg A \wedge \neg B),w)=1$. Entonces, $I(C,w)=1$ o $I(\neg A \wedge \neg B,w)=1$
+
+Si $I(C,w) = 1$, $I(A\rightarrow C,w) = 1$ y $I(B\rightarrow C,w)=1$. Por lo que, $I(A \rightarrow C\wedge B\rightarrow C, w)=1$.
+
+Si $I(\neg A \wedge \neg B, w)=1$, entonces $I(A)=0$ y $I(B)=0$. Por lo que, $I(A\rightarrow C,w) =1 $ y $I(B\rightarrow C,w)=1$. Así, $I(A \rightarrow C\wedge B\rightarrow C, w)=1$.
+
+En ambos casos, $I(A \rightarrow C\wedge B\rightarrow C, w)=1$.
+
+Por lo que, $C \vee (\neg A \wedge \neg B) \models A \rightarrow C\wedge B\rightarrow C$
+
+Sea $w$ tal que $I(A \rightarrow C\wedge B\rightarrow C, w)=1$. Entonces $I(A\rightarrow C,w) = 1$ y $I(B\rightarrow C,w)=1$. Por lo que, $I(\neg A\vee C,w) = 1$ y $I(\neg B\vee C,w)=1$.
+
+Si $I(C,w)=1$, entonces $I(C \vee (\neg A \wedge \neg B),w)=1$.
+
+Si $I(C,w)=0$, entonces $I(\neg A,w)=1$ y $I(\neg B,w)=1$. Por lo que, $I(C \vee (\neg A \wedge \neg B),w)=1$.
+
+En ambos casos $I(C \vee (\neg A \wedge \neg B),w)=1$
+
+Entonces, $A \rightarrow C\wedge B\rightarrow C\models C \vee (\neg A \wedge \neg B)$
+
+Por lo tanto, $C \vee (\neg A \wedge \neg B) \equiv A \rightarrow C\wedge B\rightarrow C$
+
+\subsection*{ h) $(A\vee B)\wedge (\neg C \vee \neg D \vee E)\models A \vee B$}
+
+Verdadero.
+
+Veamos que $\{(A\vee B)\wedge (\neg C \vee \neg D \vee E),\neg(A \vee B)\}$ no es satisfactible.
+
+Sea $w$ un modelo. Si $I((A\vee B)\wedge (\neg C \vee \neg D \vee E),w)=1$, $I(A\vee B,w)=1$. Por lo que, $I(\neg(A\vee B),w)=0$.
+
+Entonces el conjunto no es satisfactible.
+
+\subsection*{ i) $(A\vee B)\wedge (\neg C \vee \neg D \vee E)\models (A \vee B)\wedge (\neg D \vee E)$}
+
+Falso.
+
+Sae $w=\{A:V,B:V,C:F,D:V,E:F\}$.
+
+\begin{tabular}{ccccccccccc}
+  $(A$ & $\vee$ & $B)$ & $\wedge$ & $(\neg$ & $C$ & $\vee$ & $\neg$ & $D$ & $\vee$ & $E)$ \\\hline
+  V    & V      & V    & \bf V    & V       & F   & V      & F      & V   & F      & F
+\end{tabular}
+
+
+\begin{tabular}{cccccccc}
+  $(A$ & $\vee$ & $B)$ & $\wedge$ & $(\neg$ & $D$ & $\vee$ & $E)$ \\\hline
+  V    & V      & V    & \bf F    & F       & V   & F      & F
+\end{tabular}
+
+
+\subsection*{ j) $(A\vee B) \wedge \neg (A\rightarrow B)$}
+
+Verdadero.
+
+Sae $w=\{A:V,B:F\}$.
+
+\begin{tabular}{cccccccc}
+  $(A$ & $\vee$ & $B)$ & $\wedge$ & $\neg$ & $(A$ & $\rightarrow$ & $B)$ \\\hline
+  V    & V      & F    & \bf V    & V      & V    & F             & F
+\end{tabular}
+
+
+
+\subsection*{ k) $(A\leftrightarrow B )\wedge (\neg A\vee B)$}
+Verdadero.
+
+
+Sae $w=\{A:V, B:V\}$.
+
+\begin{tabular}{cccccccc}
+  $(A$ & $\leftrightarrow$ & $B)$ & $\wedge$ & $(\neg$ & $A$ & $\vee$ & $B)$ \\\hline
+  V    & V                 & V    & \bf V    & F       & V   & V      & V    \\
+\end{tabular}
+
+\subsection*{ l) }
+
+Verdadero.
+
+Por inducción sobre el número de símbolos proposicionales adicionales a $A$, $B$, $C$.
+
+Paso base $n=0$
+
+\begin{tabular}{c|c|c|c|c}
+  $A$ & $B$ & $C$ & $(A\leftrightarrow B)$ & $(A\leftrightarrow B)\leftrightarrow C$ \\\hline
+  V   & V   & V   & V                      & V                                       \\
+  V   & V   & F   & V                      & F                                       \\
+  V   & F   & V   & F                      & F                                       \\
+  V   & F   & F   & F                      & V                                       \\
+  F   & V   & V   & F                      & F                                       \\
+  F   & V   & F   & F                      & V                                       \\
+  F   & F   & V   & V                      & V                                       \\
+  F   & F   & F   & V                      & F                                       \\
+\end{tabular}
+
+
+Existen 4 modelos que satisface $(A\leftrightarrow B)$ y 4 modelos que satisface $(A\leftrightarrow B)\leftrightarrow C$.
+
+H.I.: Supongamos para $n=k$ que tiene la misma cantidad de modelos.
+
+Sean $A_1$, $A_2$,..., $A_k$, $A_{k+1}$, los símbolos proposicionales adicionales a $A$, $B$, $C$.
+Por hipótesis de inducción, existen la misma cantidad de modelos para $(A\leftrightarrow B)$ y $(A\leftrightarrow B)\leftrightarrow C$ con $A$, $B$, $C$, $A_1$, $A_2$,..., $A_k$.
+Al agregar $A_{k+1}$, se multiplica por 2 la cantidad de modelos posibles. Ya que como $A_{k+1}$ no aparece en $(A\leftrightarrow B)$ ni $(A\leftrightarrow B)\leftrightarrow C$, si w es un modelo que satisface alguna de las dos fórmulas, $w\cup\{A_{k+1}:True\}$ y $w\cup\{A_{k+1}:Falso\}$ son también modelos.
+
+Entonces, existen la misma cantidad de model para $(A\leftrightarrow B)$ y $(A\leftrightarrow B)\leftrightarrow C$ con $A$, $B$, $C$, $A_1$, $A_2$,..., $A_k$, $A_{k+1}$.
+
+Por el principio de inducción, el se cumple para toda $n$.
+
+\section*{7.18}
+
+$[(Food \rightarrow Party)\vee(Drinks\rightarrow Party)] \rightarrow [(Food \wedge Drinks)\rightarrow Party]$
+
+\subsection*{ a)}
+\begin{tabular}{ccccccccccccc}
+  $[(Food$ & $\rightarrow$ & $Party)$ & $\vee$ & $(Drinks$ & $\rightarrow$ & $Party)]$ & $\rightarrow$ & $[(Food$ & $\wedge$ & $Drinks)$ & $\rightarrow$ & $Party]$ \\\hline
+  V        & V             & V        & V      & V         & V             &           & V             &          & V        &           & V                        \\
+  V        & V             & V        & V      & F         & V             &           & V             &          & F        &           & V                        \\
+  V        & F             & F        & F      & V         & F             &           & V             &          & V        &           & F                        \\
+  V        & F             & F        & V      & F         & V             &           & V             &          & F        &           & V                        \\
+  F        & V             & V        & V      & V         & V             &           & V             &          & F        &           & V                        \\
+  F        & V             & V        & V      & F         & V             &           & V             &          & F        &           & V                        \\
+  F        & V             & F        & V      & V         & F             &           & V             &          & F        &           & V                        \\
+  F        & V             & F        & V      & F         & V             &           & V             &          & F        &           & V                        \\
+\end{tabular}
+
+Es válida.
+
+\subsection*{ b)}
+
+$[(Food \rightarrow Party)\vee(Drinks\rightarrow Party)] \rightarrow [(Food \wedge Drinks)\rightarrow Party]$
+
+$[(\neg Food \vee Party)\vee(\neg Drinks\vee Party)] \rightarrow [\neg (Food \wedge Drinks)\vee Party]$
+
+$(\neg Food \vee Party\vee\neg Drinks\vee Party) \rightarrow (\neg Food \vee \neg Drinks \vee Party)$
+
+Se confirma la a) ya que el consecuente de la implicación es el antecedente quitando la redundancia de Party.
+
+\subsection*{ c)}
+
+$\vdash (\neg Food \vee Party\vee\neg Drinks\vee Party) \rightarrow (\neg Food \vee \neg Drinks \vee Party)$
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party\} \vdash \neg Food \vee \neg Drinks \vee Party$
+
+Apliquemos resolución
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party, \neg(\neg Food \vee \neg Drinks \vee Party)\}$
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party,  Food \wedge  Drinks \wedge \neg Party\}$
+
+$\{\neg Food \vee Party\vee\neg Drinks\vee Party,  Food,  Drinks, \neg Party\}$
+
+$Food$, $\neg Food \vee Party\vee\neg Drinks\vee Party$ -> $Party\vee\neg Drinks\vee Party$
+
+$\neg Party$, $Party\vee\neg Drinks\vee Party$ -> $\neg Drinks\vee Party$
+
+Drinks, $\neg Drinks\vee Party$ -> $Party$
+
+$Party$, $\neg Party$ -> False
+
+Por lo tanto, no es satisfactible.
+
+Entonces $\{\neg Food \vee Party\vee\neg Drinks\vee Party\} \vdash \neg Food \vee \neg Drinks \vee Party$
+
+\section*{7.4}
+
+a) $\exists x (Parent(Joan,x)\wedge Female(x))$
+
+b) $\exists^1 x (Parent(Joan,x)\wedge Female(x))$
+
+c) $\exists^1 x Parent(Joan,x) \wedge \forall x (Parent(Joan,x) \rightarrow Female(x))$
+
+d) $\exists^1 x (Parent(Joan,x) \wedge Parent(Kevin,x))$
+
+e) $\exists x (Parent(Joan,x) \wedge Parent(Kevin,x))\wedge$ $\forall x (Parent(Joan,x) \rightarrow Parent(Kevin,x))$
+
+\section*{8.10}
+
+a. $Occupation(Emily,Surgeon) \vee Occupation(Emily, Lawyer)$
+
+b. $Occupation(Joe,Actor)\wedge \exists x (\neg x = Actor \wedge Occupation(Joe,x)$
+
+c. $\forall x (Occupation(x,Surgeon) \rightarrow Occupation(x,Doctor))$
+
+d. $\forall x (Occupation(x,Lawyer) \rightarrow \neg Customer(Joe,x))$
+
+e. $\exists x (Boss(x,Emily) \wedge Occupation(x,Lawyer))$
+
+f. $\exists x (Occupation(x,Lawyer)\wedge \forall y (Customer(y,x)\rightarrow Occupation(y,Doctor))$
+
+g. $\forall x (Occupation(x,Surgeon) \rightarrow \exists y (Occupation(y, Lawyer)\wedge Customer(x,y)))$
+
+\section*{9.6}
+
+a. $\forall x  (horse(x)\rightarrow mammal(x))$, $\forall x (Cow(x) \rightarrow mammal(Cows))$, $\forall x (pig(x)\rightarrow mammal(Pigs))$
+
+b. $\forall x \forall y (horse(x)\wedge offspring(y,x) \rightarrow horse(y))$
+
+c. $horse(Bluebeard)$
+
+d. $parent(Bluebeard,Charlie)$
+
+e. $\forall x \forall y(offspring(x,y) \rightarrow parent(y,x))$, $\forall x \forall y (parent(y,x) \rightarrow offspring(x,y))$
+
+f. $\forall x \exists y (mammal(x) \rightarrow parent(y,x))$
+
+
+\end{document}
