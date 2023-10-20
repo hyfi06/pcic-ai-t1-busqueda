@@ -12,6 +12,10 @@
 
 [Rama tarea-3, carpeta Tarea 3](https://github.com/hyfi06/pcic-ai241/tree/tarea-3/Tarea%203)
 
+## Tarea 3
+
+[Rama tarea-4, carpeta Tarea 4](https://github.com/hyfi06/pcic-ai241/tree/tarea-4/Tarea%204)
+
 ## Copyright
 
 Copyright (c) 2023 Héctor Olvera Vital
