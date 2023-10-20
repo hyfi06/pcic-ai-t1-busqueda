@@ -1,0 +1,4 @@
+autopep8==2.0.4
+pgmpy==0.1.24
+numpy==1.26.1
+requests==2.31.0

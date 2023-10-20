@@ -27,3 +27,7 @@ ipython_config.py
 dmypy.json
 
 .vscode
+
+# Tarea 4
+barley.bif.gz
+barley.bif
