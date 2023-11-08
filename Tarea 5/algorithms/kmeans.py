@@ -51,13 +51,14 @@ class KMeans:
         a = np.zeros((X.shape[0], 1))
         b = np.zeros((X.shape[0], self.n_clusters))
         for i in range(self.n_clusters):
-            cluster_distance = np.column_stack(tuple([
-                np.linalg.norm(X - x) for x in X
-            ]))
-            cluster_distance[cluster_distance == 0] = np.nan
-            cluster_distance = np.nanmean(cluster_distance, axis=1)
-            a[labels == i] = cluster_distance[labels == 1]
-            b[labels != i, i] = cluster_distance[labels == 0]
-            b[labels == i, i] = np.nan
+            # cluster_distance = np.column_stack(tuple([
+            #     np.linalg.norm(X - x) for x in X
+            # ]))
+            # for k in range(cluster_distance.shape[1]):
+            #     cluster_distance[:, k][cluster_distance[:, k] == 0] = np.nan
+            # cluster_distance = np.nanmean(cluster_distance, axis=1)
+            # a[labels == i] = cluster_distance[labels == i]
+            # b[labels != i, i] = cluster_distance[labels != i]
+            # b[labels == i, i] = np.nan
         b = np.nanmin(b, axis=1)
         return (b - a) / np.column_stack((a, b)).max(axis=1)
