@@ -30,7 +30,7 @@ def load_dataset(std: bool = False):
 
 
 def main():
-    data = load_dataset()
+    data = load_dataset(std=True)
     print(data)
     train, test = split_data(data)
     train = train.values[:, 1:]

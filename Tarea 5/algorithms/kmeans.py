@@ -32,7 +32,7 @@ class KMeans:
                 for cluster in clusters
             ])
             if np.all(np.abs(next_centroids - self.centroids) == 0):
-                print(j)
+                print(f"Iteraciones:{j}")
                 break
             self.centroids = next_centroids
         return self._silhouette(X)
